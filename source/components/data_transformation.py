@@ -1,0 +1,2 @@
+##Data transformation is the process of converting raw data into a structured, usable format by cleaning, normalizing, and reshaping it for analysis or storage.
+##Related to changing categorical to numerical, label encoding
