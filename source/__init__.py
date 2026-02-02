@@ -1,0 +1,2 @@
+#whenever find_packages is running it will see in how many folder do we have __init__.py. So it will directly consider this source as a package itself then it will try to build this, once it builds then we can import it anywhere we want, after we put it in pypy
+#we will build our whole project in this
