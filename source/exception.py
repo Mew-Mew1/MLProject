@@ -1,7 +1,7 @@
 #Used for exception handling
 #STEP 1
 import sys
-import logging
+from source.logger import logging
 #error_detail will be present inside sys is shown in the line below
 def error_message_detail(error, error_detail:sys):
     _, _, exc_tb = error_detail.exc_info()#it will give 3 info, only 3rd is imp - which file, which line number will be stored in exc_tb

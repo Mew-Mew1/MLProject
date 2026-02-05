@@ -1,4 +1,5 @@
 pandas 
 numpy
 seaborn
--e .
+scikit-learn
+#-e . it is used only when we setup.py
