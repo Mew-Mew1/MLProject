@@ -18,6 +18,13 @@ from source.utils import save_object
 class DataTransformationConfig:
     preprocessor_obj_file_path=os.path.join('artifacts',"proprocessor.pkl")
 
+'''
+- Defines where the preprocessing object (your pipeline) will be saved.
+- Uses dataclass for clean configuration storage.
+- File path: artifacts/proprocessor.pkl.
+
+'''
+
 class DataTransformation:
     def __init__(self):
         self.data_transformation_config=DataTransformationConfig()
