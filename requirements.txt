@@ -3,4 +3,7 @@ numpy
 seaborn
 scikit-learn
 dill
+catboost
+xgboost
+Flask
 #-e . it is used only when we setup.py
