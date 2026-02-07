@@ -4,6 +4,7 @@
 import os 
 import sys
 import dill
+import pickle
 
 import numpy as np
 import pandas as pd
@@ -15,9 +16,10 @@ def save_object(file_path, obj):
     try:
         dir_path = os.path.dirname(file_path)
 
-        os.makedirs(dir_path, exist_ok = True)
+        os.makedirs(dir_path, exist_ok=True)
+
         with open(file_path, "wb") as file_obj:
-            dill.dump(obj, file_obj)
+            pickle.dump(obj, file_obj)
 
     except Exception as e:
         raise CustomException(e, sys)
@@ -26,13 +28,13 @@ def save_object(file_path, obj):
 def evaluate_models(X_train, X_test, y_train, y_test, models, params):
     try:
         report = {}
-        for i in len(list(models.values())):
+        for i in range(len(list(models.values()))):
             model = list(models.values())[i]
-            gs = GridSearchCV()
             para = params[list(models.keys())[i]]
+            gs = GridSearchCV(model, para, cv=3)
 
             gs.fit(X_train, y_train)
-            model.set_param(**gs.best_params_)
+            model.set_params(**gs.best_params_)
             model.fit(X_train, y_train)
 
             y_pred = model.predict(X_test)

@@ -29,7 +29,7 @@ class ModelTrainer:
     def __init__(self):
         self.model_trainer_config = ModelTrainerConfig()
 
-    def initiate_model_training(self, train_array, test_array, preprocessor_path):
+    def initiate_model_training(self, train_array, test_array):
         try:
             logging.info("Split training and test input data")
             X_train, y_train, X_test, y_test = (
@@ -45,7 +45,6 @@ class ModelTrainer:
                 "Gradient Boosting": GradientBoostingRegressor(),
                 "Linear Regression": LinearRegression(),
                 "XGBRegressor": XGBRegressor(),
-                "CatBoosting Regressor": CatBoostRegressor(verbose=False),
                 "AdaBoost Regressor": AdaBoostRegressor(),
             }
 
@@ -74,11 +73,6 @@ class ModelTrainer:
                     'learning_rate':[.1,.01,.05,.001],
                     'n_estimators': [8,16,32,64,128,256]
                 },
-                "CatBoosting Regressor":{
-                    'depth': [6,8,10],
-                    'learning_rate': [0.01, 0.05, 0.1],
-                    'iterations': [30, 50, 100]
-                },
                 "AdaBoost Regressor":{
                     'learning_rate':[.1,.01,0.5,.001],
                     # 'loss':['linear','square','exponential'],
@@ -87,7 +81,7 @@ class ModelTrainer:
                 
             }
 
-            model_report:dict= evaluate_models(X_train = X_train, X_test = X_test, y_train = y_train, y_test =y_test, model = models, param = params)
+            model_report:dict= evaluate_models(X_train = X_train, X_test = X_test, y_train = y_train, y_test =y_test, models = models, params = params)
             
             best_model_score = max(sorted(model_report.values()))
             best_model_name =  list(models.keys())[list(model_report.values()).index(best_model_score)]
@@ -98,6 +92,11 @@ class ModelTrainer:
             logging.info("Best model found by fitting it on training data\n")
 
             best_model = models[best_model_name]
+            
+            save_object(
+                file_path=self.model_trainer_config.trained_model_file_path,
+                obj=best_model
+            )
 
             predicted = best_model.predict(X_test)
             r2score = r2_score(y_test, predicted)
